@@ -10,21 +10,13 @@ f = open("res.mail", "w", encoding="utf-8")
 
 
 def addurltags(r):
-    redditurl = r'(\[(.+)\]\((http[s]*:\/\/.+)\))+?'
+    redditurl = r'(\[(.+?)\]\((http[s]*:\/\/.+?)\))+?'
     resultredd = re.findall(redditurl, r)
     if len(resultredd) > 0:
         for rr in resultredd:
             urllink = "<a href='"+rr[2]+"'>"+rr[1]+"</a>"
             r = r.replace(rr[0],urllink)
     return r
-    '''
-    url= r'https*://[A-Za-z0-9./#_~\-?:&=%]*' 
-    result = re.findall(url, r)
-    for res in result:
-        urllink = "<a href='"+res+"'>"+res+"</a>"
-        r = r.replace(res,urllink)
-        return r
-    '''
 
 def addhighlights(r):
     for w in ql:
@@ -36,7 +28,7 @@ def addhighlights(r):
 
 
 reddit = praw.Reddit(
-    client_id="74sdNOT_REALg254", 
+    client_id="74sdNOT_REALg254",
     client_secret='Q_NOT_REAL_Qlkc',
     user_agent='blah blah')
 
@@ -48,7 +40,7 @@ for submission in reddit.subreddit(subs).new(limit=200):
             submissions[submission.id].append(comment.body)
         except:
             pass
-i = 0 
+i = 0
 searchresults = []
 for s in submissions:
     for post in submissions[s]:
@@ -64,7 +56,7 @@ MIME-Version: 1.0
 Content-Type: text/html
 
 """
-mime = m0+m1 
+mime = m0+m1
 email=mime
 for s in unqsets:
     email = email + "<a href='https://www.reddit.com/" + submissions[s][1] +"'>"+submissions[s][0]+"</a>"
@@ -77,5 +69,5 @@ for s in unqsets:
 f.write(email)
 f.close()
 cmd = "cat /home/pygar/res.mail | msmtp -a gmail abrahamsalloum@gmail.com"
-os.system(cmd) 
+os.system(cmd)
 
