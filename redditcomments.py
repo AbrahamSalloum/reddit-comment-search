@@ -4,10 +4,10 @@ import os
 import datetime
 
 submissions = {}
+searchresults = []
 subs = "subreddit0+subreddit1"
 ql = ["keywordA", "keywordB", "keywordC", "keywordD"]
 f = open("res.mail", "w", encoding="utf-8")
-
 
 def addurltags(r):
     redditurl = r'(\[(.+?)\]\((http[s]*:\/\/.+?)\))+?'
@@ -27,11 +27,12 @@ def addhighlights(r):
     return r
 
 
+## starts here ##
+
 reddit = praw.Reddit(
     client_id="74sdNOT_REALg254",
     client_secret='Q_NOT_REAL_Qlkc',
     user_agent='blah blah')
-
 
 for submission in reddit.subreddit(subs).new(limit=200):
     submissions[submission.id] = [submission.title, submission.permalink, submission.selftext]
@@ -40,8 +41,8 @@ for submission in reddit.subreddit(subs).new(limit=200):
             submissions[submission.id].append(comment.body)
         except:
             pass
-i = 0
-searchresults = []
+
+
 for s in submissions:
     for post in submissions[s]:
         if any(keyword.upper() in post.upper() for keyword in ql):
