@@ -12,10 +12,9 @@ f = open("res.mail", "w", encoding="utf-8")
 def addurltags(r):
     redditurl = r'(\[(.+?)\]\((http[s]*:\/\/.+?)\))+?'
     resultredd = re.findall(redditurl, r)
-    if len(resultredd) > 0:
-        for rr in resultredd:
-            urllink = "<a href='"+rr[2]+"'>"+rr[1]+"</a>"
-            r = r.replace(rr[0],urllink)
+    for rr in resultredd:
+        urllink = "<a href='"+rr[2]+"'>"+rr[1]+"</a>"
+        r = r.replace(rr[0],urllink)
     return r
 
 def addhighlights(r):
