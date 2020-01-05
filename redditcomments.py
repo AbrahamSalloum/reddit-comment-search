@@ -72,4 +72,3 @@ f.write(email)
 f.close()
 cmd = "cat res.mail | msmtp -a gmail recipient@gmail.com" 
 os.system(cmd)
-f.close()
